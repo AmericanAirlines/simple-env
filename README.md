@@ -58,7 +58,7 @@ Autocomplete and Defined Keys are your new best friend. Using Simple Env makes i
 
 |  Package   | Zero Dependencies | JS/TS Support | Loads .env | Required vs Optional Specification | Autocomplete | Requires Defined Keys | Return Type Helpers |
 | :--------: | :---------------: | :-----------: | :--------: | :--------------------------------: | :----------: | :-------------------: | :-----------------: |
-| Simple Env |        ✅         |      ✅       |     ❌     |                 ✅                 |      ✅      |          ✅           |         🔜          |
+| Simple Env |        ✅         |      ✅       |     🔜     |                 ✅                 |      ✅      |          ✅           |         🔜          |
 |   dotenv   |        ✅         |      ✅       |     ✅     |                 ❌                 |      ❌      |          ❌           |         ❌          |
 |  env-var   |        ✅         |      ✅       |     ❌     |                 ✅                 |      ❌      |          ❌           |         ✅          |
 
