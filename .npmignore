@@ -1,0 +1,11 @@
+.npm
+.github
+coverage
+node_modules
+src
+
+.eslintrc
+.gitignore
+.prettierrc
+jest.config.js
+package-lock.json
