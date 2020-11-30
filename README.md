@@ -45,20 +45,20 @@ const someRequiredSecret = env.someRequiredSecret;
 | Env Var Type  | State of Variable | Return Value/Behavior                  |
 | :-----------: | :---------------: | :------------------------------------- |
 |   optional    |        set        | ✅ Associated value returned as string |
-|   optional    |       unset       | ✅ Empty string returned               |
+|   optional    |       unset       | ✅ Undefined returned                  |
 |   required    |        set        | ✅ Associated value returned as string |
 |   required    |       unset       | 💥 Error is thrown                     |
 | N/A - Unknown |        ???        | 💥 Error is thrown                     |
 
 > ⚠️ Retrieving an unset and `required` env variable at the root of a file will throw an error and **the app will fail to start**.
 
-# Why use Simple Env?
+# Why use simple-env?
 
-Autocomplete and Defined Keys are your new best friend. Using Simple Env makes it easier for devs to utilize environment variables via autocomplete and requiring defined keys prevents typos and makes refactoring incredibly simple.
+Autocomplete and Defined Keys are your new best friend. Using simple-env makes it easier for devs to utilize environment variables via autocomplete and requiring defined keys prevents typos and makes refactoring incredibly simple.
 
 |  Package   | Zero Dependencies | JS/TS Support | Loads .env | Required vs Optional Specification | Autocomplete | Requires Defined Keys | Return Type Helpers |
 | :--------: | :---------------: | :-----------: | :--------: | :--------------------------------: | :----------: | :-------------------: | :-----------------: |
-| Simple Env |        ✅         |      ✅       |     🔜     |                 ✅                 |      ✅      |          ✅           |         🔜          |
+| simple-env |        ✅         |      ✅       |     🔜     |                 ✅                 |      ✅      |          ✅           |         🔜          |
 |   dotenv   |        ✅         |      ✅       |     ✅     |                 ❌                 |      ❌      |          ❌           |         ❌          |
 |  env-var   |        ✅         |      ✅       |     ❌     |                 ✅                 |      ❌      |          ❌           |         ✅          |
 
@@ -152,9 +152,10 @@ export default const env = setEnv({
 Interested in contributing to the project? Check out our [Contributing Guidelines](./.github/CONTRIBUTING.md).
 
 ## Running Locally
+
 1. Install dependencies with `npm i`
 1. Run `npm run dev` to compile and re-compile on change
 1. Run `npm link`
 1. Navigate to another Node.js project and run `npm link simple-env`
 
-You can now use Simple Env functionality within your project. On changing/adding functionality, the `simple-env` package will update within your other project so you can test changes immediately.
+You can now use simple-env functionality within your project. On changing/adding functionality, the `simple-env` package will update within your other project so you can test changes immediately.
