@@ -2,7 +2,7 @@
 
 ## Long-Running Branches
 
-- `n.x`: Stable release branches where `n` is next major version of the package (e.g., `1.x` for version `^1.0.0`)
+- `n.x`: Stable release branches where `n` is a major version of the package (e.g., `1.x` for version `^1.0.0`)
   - These branches will be periodically updated with minor and patch releases as we enhance the package
   - A release will be made upon each merge to the branch with the release being published to the npm package registry
 - `main`: The latest version of the project, which may be unstable and will not be directly release
