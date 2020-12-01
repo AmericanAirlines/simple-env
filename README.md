@@ -1,3 +1,5 @@
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+![Build and Publish](https://github.com/AmericanAirlines/simple-env/workflows/Build%20and%20Publish/badge.svg)
 # `simple-env`
 
 An intuitive, strongly typed, and scalable way to retrieve environment variables.
