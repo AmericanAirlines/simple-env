@@ -1,6 +1,6 @@
-# simple-env
+# `simple-env`
 
-An intuitive and scalable way to retrieve environment variables, including the specification of both optional and required variables.
+An intuitive, strongly typed, and scalable way to retrieve environment variables.
 
 # Installation
 
@@ -14,7 +14,7 @@ yarn add simple-env
 
 # Usage
 
-Create a file to manage your environment variables (either added via arguments or a `.env` file and [`dotenv`](https://github.com/motdotla/dotenv)):
+Create a file to manage your environment variables (either added via arguments or a `.env` file loaded with [`dotenv`](https://github.com/motdotla/dotenv)):
 
 ```typescript
 // src/env.ts
@@ -31,7 +31,7 @@ export default const env = setEnv({
 });
 ```
 
-Import `getEnv` from the package and then retrieve your optional/required variables from your env file:
+Import `env` (or whatever you named your export) from your configuration file:
 
 ```typescript
 // src/index.ts
@@ -45,22 +45,29 @@ const someRequiredSecret = env.someRequiredSecret;
 | Env Var Type  | State of Variable | Return Value/Behavior                  |
 | :-----------: | :---------------: | :------------------------------------- |
 |   optional    |        set        | ✅ Associated value returned as string |
-|   optional    |       unset       | ✅ Undefined returned                  |
+|   optional    |       unset       | ✅ `undefined` returned                |
 |   required    |        set        | ✅ Associated value returned as string |
-|   required    |       unset       | 💥 Error is thrown                     |
-| N/A - Unknown |        ???        | 💥 Error is thrown                     |
+|   required    |       unset       | 💥 Runtime error                       |
+| N/A - Unknown |        ???        | 💥 Compilation error                   |
 
 > ⚠️ Retrieving an unset and `required` env variable at the root of a file will throw an error and **the app will fail to start**.
 
-# Why use simple-env?
+# Why use `simple-env`?
 
-Autocomplete and Defined Keys are your new best friend. Using simple-env makes it easier for devs to utilize environment variables via autocomplete and requiring defined keys prevents typos and makes refactoring incredibly simple.
+Autocomplete and Strongly Typed Keys are your new best friend! Using `simple-env` makes it easier for devs to utilize environment variables via autocomplete and requiring defined keys prevents typos and makes refactoring incredibly simple.
 
-|  Package   | Zero Dependencies | JS/TS Support | Loads .env | Required vs Optional Specification | Autocomplete | Requires Defined Keys | Return Type Helpers |
-| :--------: | :---------------: | :-----------: | :--------: | :--------------------------------: | :----------: | :-------------------: | :-----------------: |
-| simple-env |        ✅         |      ✅       |     🔜     |                 ✅                 |      ✅      |          ✅           |         🔜          |
-|   dotenv   |        ✅         |      ✅       |     ✅     |                 ❌                 |      ❌      |          ❌           |         ❌          |
-|  env-var   |        ✅         |      ✅       |     ❌     |                 ✅                 |      ❌      |          ❌           |         ✅          |
+| Feature                            | `simple-env` | `dotenv` | `env-var` |
+| :--------------------------------- | :----------: | :------: | :-------: |
+| Zero Dependencies                  |      ✅      |    ✅    |    ✅     |
+| JS/TS Support                      |      ✅      |    ✅    |    ✅     |
+| Required vs Optional Specification |      ✅      |    ❌    |    ✅     |
+| Autocomplete                       |      ✅      |    ❌    |    ❌     |
+| Strongly Typed Keys                |      ✅      |    ❌    |    ❌     |
+| Single Location Refactor           |      ✅      |    ❌    |    ❌     |
+| Return Type Helpers                |      🔜      |    ❌    |    ✅     |
+| Loads .env                         |      🔜      |    ✅    |    ❌     |
+
+Let's see how some of the features above look in code:
 
 ```typescript
 // fileA.ts
@@ -71,7 +78,7 @@ const secret = process.env.SECRE;
 // 👆 Brittle, susceptible to typos, weak types, and painful to refactor 😓
 
 const env = setEnv({
-  required: { secret: '' },
+  required: { secret: 'SOMETHING_SECRET' },
 });
 
 const secret = env.secret;
@@ -80,14 +87,14 @@ const secret = env.secre; // Property 'secre' does not exist on type '{ readonly
 // 👆 Compilation errors on typos, autocompletes as you type, and env var key can be modified without needing to refactor everywhere 👌
 
 const env = setEnv({
-  required: { requiredSecret: '' },
-  optional: { optionalSecret: '' },
+  required: { requiredSecret: 'SOME_REQUIRED_SECRET' },
+  optional: { optionalSecret: 'SOME_OPTIONAL_SECRET' },
 });
 
 env.requiredSecret.valueOf(); // No error
 env.optionalSecret.valueOf(); // Object is possibly 'undefined'. ts(2532)
 
-// 👆 Extremely strong typing knows what's required vs optional, catch bugs faster 🐞
+// 👆 Extremely strong typing - it knows what's required vs optional, which helps you catch bugs faster 🐞
 ```
 
 # Options
@@ -158,4 +165,4 @@ Interested in contributing to the project? Check out our [Contributing Guideline
 1. Run `npm link`
 1. Navigate to another Node.js project and run `npm link simple-env`
 
-You can now use simple-env functionality within your project. On changing/adding functionality, the `simple-env` package will update within your other project so you can test changes immediately.
+You can now use `simple-env` functionality within your project. On changing/adding functionality, the `simple-env` package will update within your other project so you can test changes immediately.
