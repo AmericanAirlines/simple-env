@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import { exec } from 'child_process';
 
-jest.setTimeout(15000);
+jest.setTimeout(10000);
 
 const shouldNotCompile = (filename: string) => async () => {
   const fixturePath = path.join(process.cwd(), 'src/test/fixtures', filename);
@@ -20,7 +20,7 @@ const shouldNotCompile = (filename: string) => async () => {
 };
 
 describe('compilation errors', () => {
-  it.concurrent('missing key', shouldNotCompile('missingKey.ts'));
-  it.concurrent('duplicate keys', shouldNotCompile('duplicateKeys.ts'));
-  it.concurrent('optional key', shouldNotCompile('optionalKey.ts'));
+  it('missing key', shouldNotCompile('missingKey.ts'));
+  it('duplicate keys', shouldNotCompile('duplicateKeys.ts'));
+  it('optional key', shouldNotCompile('optionalKey.ts'));
 });
