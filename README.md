@@ -1,6 +1,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Dependencies: 0](https://img.shields.io/badge/Dependencies-0-brightgreen.svg)](package.json)
 ![Build and Publish](https://github.com/AmericanAirlines/simple-env/workflows/Build%20and%20Publish/badge.svg)
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/AmericanAirlines/simple-env.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/AmericanAirlines/simple-env/alerts/)
+[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/AmericanAirlines/simple-env.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/AmericanAirlines/simple-env/context:javascript)
 [![codecov](https://codecov.io/gh/AmericanAirlines/simple-env/branch/main/graph/badge.svg)](https://codecov.io/gh/AmericanAirlines/simple-env)
 # `simple-env`
 
