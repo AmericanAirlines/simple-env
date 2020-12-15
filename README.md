@@ -1,4 +1,5 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![codecov](https://codecov.io/gh/AmericanAirlines/simple-env/branch/main/graph/badge.svg)](https://codecov.io/gh/AmericanAirlines/simple-env)
 [![Dependencies: 0](https://img.shields.io/badge/Dependencies-0-brightgreen.svg)](package.json)
 ![Build and Publish](https://github.com/AmericanAirlines/simple-env/workflows/Build%20and%20Publish/badge.svg)
 # `simple-env`
