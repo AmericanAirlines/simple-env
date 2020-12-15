@@ -1,5 +1,5 @@
 {
-  "name": "simple-env",
+  "name": "@americanairlines/simple-env",
   "version": "1.0.0",
   "description": "Utils for environment variables",
   "main": "dist/index.js",

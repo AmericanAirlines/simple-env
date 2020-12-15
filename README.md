@@ -4,6 +4,7 @@
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/AmericanAirlines/simple-env.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/AmericanAirlines/simple-env/alerts/)
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/AmericanAirlines/simple-env.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/AmericanAirlines/simple-env/context:javascript)
 [![codecov](https://codecov.io/gh/AmericanAirlines/simple-env/branch/main/graph/badge.svg)](https://codecov.io/gh/AmericanAirlines/simple-env)
+
 # `simple-env`
 
 An intuitive, strongly typed, and scalable way to retrieve environment variables.
@@ -12,10 +13,10 @@ An intuitive, strongly typed, and scalable way to retrieve environment variables
 
 ```shell
 # Via npm
-npm install simple-env
+npm install @americanairlines/simple-env
 
 # Via Yarn
-yarn add simple-env
+yarn add @americanairlines/simple-env
 ```
 
 # Usage
@@ -24,7 +25,7 @@ Create a file to manage your environment variables (either added via arguments o
 
 ```typescript
 // src/env.ts
-import { setEnv } from 'simple-env';
+import { setEnv } from '@americanairlines/simple-env';
 
 export default const env = setEnv({
   required: {
@@ -111,7 +112,7 @@ env.optionalSecret.valueOf(); // Object is possibly 'undefined'. ts(2532)
 
 ```typescript
 // src/env.ts
-import { setEnv } from 'simple-env';
+import { setEnv } from '@americanairlines/simple-env';
 
 export default const env = setEnv({
   required: {
@@ -127,7 +128,7 @@ You can choose to only include `optional` env vars by passing in a single object
 
 ```typescript
 // src/env.ts
-import { setEnv } from 'simple-env';
+import { setEnv } from '@americanairlines/simple-env';
 
 export default const env = setEnv({
   optional: {
@@ -142,7 +143,7 @@ If you want to set your env vars in multiple groups, make sure to destructure th
 
 ```typescript
 // src/env.ts
-import { setEnv } from 'simple-env';
+import { setEnv } from '@americanairlines/simple-env';
 
 setEnv({
   required: {
@@ -169,6 +170,6 @@ Interested in contributing to the project? Check out our [Contributing Guideline
 1. Install dependencies with `npm i`
 1. Run `npm run dev` to compile and re-compile on change
 1. Run `npm link`
-1. Navigate to another Node.js project and run `npm link simple-env`
+1. Navigate to another Node.js project and run `npm link @americanairlines/simple-env`
 
-You can now use `simple-env` functionality within your project. On changing/adding functionality, the `simple-env` package will update within your other project so you can test changes immediately.
+You can now use `simple-env` functionality within your project. On changing/adding functionality, the `@americanairlines/simple-env` package will update within your other project so you can test changes immediately.
