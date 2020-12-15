@@ -1,6 +1,6 @@
 {
   "name": "@americanairlines/simple-env",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An intuitive, strongly typed, and scalable way to retrieve environment variables",
   "keywords": [
     "env",
