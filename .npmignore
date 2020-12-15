@@ -1,11 +1,9 @@
-.npm
-.github
-coverage
-node_modules
-src
+**/*
 
-.eslintrc
-.gitignore
-.prettierrc
-jest.config.js
-package-lock.json
+!package.json
+!package-lock.json
+!dist
+!Authors.md
+!LICENSE
+!README.md
+!THIRD-PARTY-NOTICES.txt
