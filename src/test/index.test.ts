@@ -25,8 +25,14 @@ describe('simple-env', () => {
       delete process.env[envKey];
     });
 
-    it('will return env vars for known values', () => {
+    it('will return env vars for known required values', () => {
       const env = setEnv({ required: { [envShortKey]: envKey } });
+
+      expect(env[envShortKey]).toBe(envValue);
+    });
+
+    it('will return env vars for known optional values', () => {
+      const env = setEnv({ optional: { [envShortKey]: envKey } });
 
       expect(env[envShortKey]).toBe(envValue);
     });

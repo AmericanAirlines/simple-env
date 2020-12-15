@@ -12,9 +12,10 @@ let _options: InternalOptions = {
 const createSymbol = (description: string): SymbolWithDescription => Symbol(description) as SymbolWithDescription;
 
 function getEnv(key: SymbolWithDescription): string | undefined {
-  const isRequired = _requiredEnvVars.find((symbol) => symbol === key);
+  const isRequired = _requiredEnvVars.includes(key);
   const value = process.env[key.description];
 
+  console.log(!value, isRequired);
   if (!value && isRequired) {
     const requiredVarMissingError = `Required environment variable "${key.description}" was not set! Terminating app.`;
     throw new Error(requiredVarMissingError);
