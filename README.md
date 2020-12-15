@@ -3,6 +3,7 @@
 ![Build and Publish](https://github.com/AmericanAirlines/simple-env/workflows/Build%20and%20Publish/badge.svg)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/AmericanAirlines/simple-env.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/AmericanAirlines/simple-env/alerts/)
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/AmericanAirlines/simple-env.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/AmericanAirlines/simple-env/context:javascript)
+[![codecov](https://codecov.io/gh/AmericanAirlines/simple-env/branch/main/graph/badge.svg)](https://codecov.io/gh/AmericanAirlines/simple-env)
 # `simple-env`
 
 An intuitive, strongly typed, and scalable way to retrieve environment variables.
