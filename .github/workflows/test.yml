@@ -20,3 +20,9 @@ jobs:
         run: |
           npm ci
           npm run test:coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{secrets.CODECOV_TOKEN}}
+          file: ./coverage/coverage-final.json
+          name: codecov-${{ matrix.node-version }}
