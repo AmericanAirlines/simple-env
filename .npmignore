@@ -2,7 +2,7 @@
 
 !package.json
 !package-lock.json
-!dist
+!dist/**
 !Authors.md
 !LICENSE
 !README.md
