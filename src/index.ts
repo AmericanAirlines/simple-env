@@ -35,16 +35,8 @@ function symbolizeVars<T>(input: Record<string, string>) {
   );
 }
 
-function parseEnv(options: DotenvConfigOptions = {}): any {
-  const { parsed }: DotenvLoadOutput = config(options);
-  if (parsed) {
-    const required: Record<string, string> = {};
-    Object.keys(parsed).forEach((key) => {
-      required[key] = key;
-    });
-    return required;
-  }
-  return undefined;
+function parseEnv(options: DotenvConfigOptions = {}) {
+  config(options);
 }
 
 export default function setEnv<T extends UndefinedEnvVars, V extends UndefinedEnvVars>(
