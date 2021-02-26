@@ -101,7 +101,7 @@ describe('simple-env', () => {
     });
 
     it('will read an env variable from a .env file into process.env', () => {
-      const env = setEnv({ required: { test: 'TEST' }, dotEnvOptions: { node_env: 'unittest' } });
+      const env = setEnv({ required: { test: 'TEST' }, dotEnvOptions: { envFileName: '.env.unittest' } });
 
       expect(process.env.TEST).toEqual(env.test);
     });

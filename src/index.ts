@@ -1,7 +1,9 @@
-import { config, DotenvConfigOptions } from 'dotenv-flow';
+import { readFileSync, existsSync } from 'fs';
+import { EOL } from 'os';
+import { join } from 'path';
 import { EnvVarSymbols, UndefinedEnvVars } from './types/EnvVars';
 import { SymbolWithDescription } from './types/helpers';
-import { InternalOptions, Options } from './types/Options';
+import { EnvOptions, InternalOptions, Options } from './types/Options';
 
 let _requiredEnvVars: SymbolWithDescription[] = [];
 let _symbolizedEnvVars: Record<string, SymbolWithDescription>;
@@ -35,8 +37,52 @@ function symbolizeVars<T>(input: Record<string, string>) {
   );
 }
 
-function parseEnv(options: DotenvConfigOptions) {
-  config(options);
+function parseLine(line: string): Record<string, string> {
+  const delimiter = '=';
+  const lineRegex = /^\s*[a-zA-Z_][a-zA-Z0-9_]*\s*="?'?.*'?"?$/g;
+  let [key, val] = line.split(delimiter);
+
+  // Ignore comments, or lines which don't conform to acceptable patterns
+  if (key.startsWith('#') || key.startsWith('//') || !lineRegex.test(line)) {
+    return {};
+  }
+
+  key = key.trim();
+  val = val.trim();
+  // Get rid of wrapping double or single quotes
+  if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+    val = val.substr(1, val.length - 2);
+  }
+
+  return { [key]: val };
+}
+
+function parseEnvFile(dotEnvOptions: EnvOptions = {}): Record<string, string> {
+  const envPath = dotEnvOptions.pathToEnv || process.cwd();
+  const envFilename = dotEnvOptions.envFileName || '.env';
+  const fullPath = join(envPath, envFilename);
+
+  if (!existsSync(fullPath)) {
+    return {};
+  }
+
+  const envFileContents = readFileSync(fullPath).toString();
+  let envVarPairs: Record<string, string> = {};
+
+  const lines = envFileContents.split(EOL);
+  lines.forEach((line: string) => {
+    envVarPairs = { ...envVarPairs, ...parseLine(line) };
+  });
+
+  // Toss everything into the environment
+  Object.entries(envVarPairs).forEach(([key, val]) => {
+    // Prefer env vars that have been set by the OS
+    if (!process.env[key]) {
+      process.env[key] = val;
+    }
+  });
+
+  return envVarPairs;
 }
 
 export default function setEnv<T extends UndefinedEnvVars, V extends UndefinedEnvVars>(
@@ -49,7 +95,7 @@ export default function setEnv<T extends UndefinedEnvVars, V extends UndefinedEn
     ...options,
   };
 
-  parseEnv(_options.dotEnvOptions);
+  parseEnvFile(_options.dotEnvOptions);
 
   const symbolizedRequiredEnvVars = symbolizeVars<EnvVarSymbols<T>>(_options.required);
   _requiredEnvVars = Object.values(symbolizedRequiredEnvVars);
