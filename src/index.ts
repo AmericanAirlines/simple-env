@@ -1,4 +1,4 @@
-import { config, DotenvConfigOptions, DotenvLoadOutput } from 'dotenv-flow';
+import { config, DotenvConfigOptions } from 'dotenv-flow';
 import { EnvVarSymbols, UndefinedEnvVars } from './types/EnvVars';
 import { SymbolWithDescription } from './types/helpers';
 import { InternalOptions, Options } from './types/Options';
