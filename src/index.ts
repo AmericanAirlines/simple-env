@@ -1,3 +1,4 @@
+import { config, DotenvConfigOptions, DotenvLoadOutput } from 'dotenv-flow';
 import { EnvVarSymbols, UndefinedEnvVars } from './types/EnvVars';
 import { SymbolWithDescription } from './types/helpers';
 import { InternalOptions, Options } from './types/Options';
@@ -7,6 +8,7 @@ let _symbolizedEnvVars: Record<string, SymbolWithDescription>;
 let _options: InternalOptions = {
   required: {},
   optional: {},
+  dotEnvOptions: {},
 };
 
 const createSymbol = (description: string): SymbolWithDescription => Symbol(description) as SymbolWithDescription;
@@ -33,6 +35,18 @@ function symbolizeVars<T>(input: Record<string, string>) {
   );
 }
 
+function parseEnv(options: DotenvConfigOptions = {}): any {
+  const { parsed }: DotenvLoadOutput = config(options);
+  if (parsed) {
+    const required: Record<string, string> = {};
+    Object.keys(parsed).forEach((key) => {
+      required[key] = key;
+    });
+    return required;
+  }
+  return undefined;
+}
+
 export default function setEnv<T extends UndefinedEnvVars, V extends UndefinedEnvVars>(
   options: Options<T, V>,
 ): {
@@ -42,6 +56,8 @@ export default function setEnv<T extends UndefinedEnvVars, V extends UndefinedEn
     ..._options,
     ...options,
   };
+
+  parseEnv(_options.dotEnvOptions);
 
   const symbolizedRequiredEnvVars = symbolizeVars<EnvVarSymbols<T>>(_options.required);
   _requiredEnvVars = Object.values(symbolizedRequiredEnvVars);
