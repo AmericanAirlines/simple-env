@@ -35,7 +35,7 @@ function symbolizeVars<T>(input: Record<string, string>) {
   );
 }
 
-function parseEnv(options: DotenvConfigOptions = {}) {
+function parseEnv(options: DotenvConfigOptions) {
   config(options);
 }
 
