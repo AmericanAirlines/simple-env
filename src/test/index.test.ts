@@ -100,7 +100,7 @@ describe('simple-env', () => {
       expect(Object.getOwnPropertyDescriptors(env)).toHaveProperty('somethingElse');
     });
 
-    it('will read variable from .env file into process.env', () => {
+    it('will read an env variable from a .env file into process.env', () => {
       const env = setEnv({ required: { test: 'TEST' }, dotEnvOptions: { node_env: 'unittest' } });
 
       expect(process.env.TEST).toEqual(env.test);
