@@ -12,6 +12,6 @@ export interface Options<Required extends UndefinedEnvVars = DefaultEnvVars, Opt
   dotEnvOptions?: EnvOptions;
 }
 
-export interface InternalOptions extends Required<Options> {
+export interface InternalOptions extends Omit<Required<Options>, 'optional'> {
   optional: DefaultEnvVars;
 }

@@ -25,9 +25,9 @@ Create a file to manage your environment variables (either added via arguments o
 
 ```typescript
 // src/env.ts
-import { setEnv } from '@americanairlines/simple-env';
+import setEnv from '@americanairlines/simple-env';
 
-export default const env = setEnv({
+export const env = setEnv({
   required: {
     nodeEnv: 'NODE_ENV',
     someRequiredSecret: 'SOME_REQUIRED_SECRET',
@@ -112,9 +112,9 @@ env.optionalSecret.valueOf(); // Object is possibly 'undefined'. ts(2532)
 
 ```typescript
 // src/env.ts
-import { setEnv } from '@americanairlines/simple-env';
+import setEnv from '@americanairlines/simple-env';
 
-export default const env = setEnv({
+export const env = setEnv({
   required: {
     nodeEnv: 'NODE_ENV',
     someRequiredSecret: 'SOME_REQUIRED_SECRET',
@@ -128,9 +128,9 @@ You can choose to only include `optional` env vars by passing in a single object
 
 ```typescript
 // src/env.ts
-import { setEnv } from '@americanairlines/simple-env';
+import setEnv from '@americanairlines/simple-env';
 
-export default const env = setEnv({
+export const env = setEnv({
   optional: {
     anOptionalSecret: 'AN_OPTIONAL_SECRET',
   },
@@ -143,7 +143,7 @@ If you want to set your env vars in multiple groups, make sure to destructure th
 
 ```typescript
 // src/env.ts
-import { setEnv } from '@americanairlines/simple-env';
+import setEnv from '@americanairlines/simple-env';
 
 setEnv({
   required: {
@@ -152,7 +152,7 @@ setEnv({
   },
 });
 
-export default const env = setEnv({
+export const env = setEnv({
   optional: {
     anOptionalSecret: 'AN_OPTIONAL_SECRET',
   },
