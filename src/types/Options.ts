@@ -2,8 +2,7 @@ import { DefaultEnvVars, UndefinedEnvVars } from './EnvVars';
 import { RemoveKeys } from './helpers';
 
 export interface EnvOptions {
-  pathToEnv?: string;
-  envFileName?: string;
+  envFile?: string;
 }
 
 export interface Options<Required extends UndefinedEnvVars = DefaultEnvVars, Optional extends UndefinedEnvVars = DefaultEnvVars> {
