@@ -38,8 +38,8 @@ function symbolizeVars<T>(input: Record<string, string>) {
 export default function setEnv<T extends UndefinedEnvVars, V extends UndefinedEnvVars>(
   options: Options<T, V>,
 ): {
-    readonly [K in keyof (T & Partial<V>)]: (T & Partial<V>)[K];
-  } {
+  readonly [K in keyof (T & Partial<V>)]: (T & Partial<V>)[K];
+} {
   _options = {
     ..._options,
     ...options,

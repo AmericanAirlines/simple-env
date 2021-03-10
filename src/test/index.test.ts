@@ -147,8 +147,7 @@ describe('simple-env', () => {
     });
 
     it('will reject malformed lines', () => {
-      const fakeFile =
-      `
+      const fakeFile = `
       bad
       good=this
       4=bad
@@ -166,8 +165,7 @@ describe('simple-env', () => {
     });
 
     it('will ignore comments in the file', () => {
-      const fakeFile =
-      `
+      const fakeFile = `
       #comment\n
       //comment\n
       TEST=test
