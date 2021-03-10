@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import { join } from 'path';
-import { EnvOptions } from './types/Options';
+import { ConfigOptions } from './types/Options';
 
 function parseLine(line: string): Record<string, string> {
   const delimiter = '=';
@@ -22,8 +22,8 @@ function parseLine(line: string): Record<string, string> {
   return { [key]: val };
 }
 
-export function parseEnvFile(dotEnvOptions: EnvOptions = {}): void {
-  const fullPath = dotEnvOptions.envFile || join(process.cwd(), '.env');
+export function parseEnvFile(options: ConfigOptions = {}): void {
+  const fullPath = options.envFile || join(process.cwd(), '.env');
 
   if (!fs.existsSync(fullPath)) {
     return;

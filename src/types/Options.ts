@@ -1,7 +1,7 @@
 import { DefaultEnvVars, UndefinedEnvVars } from './EnvVars';
 import { RemoveKeys } from './helpers';
 
-export interface EnvOptions {
+export interface ConfigOptions {
   envFile?: string;
   loadDotEnv?: boolean;
 }
@@ -9,7 +9,7 @@ export interface EnvOptions {
 export interface Options<Required extends UndefinedEnvVars = DefaultEnvVars, Optional extends UndefinedEnvVars = DefaultEnvVars> {
   required?: Required;
   optional?: RemoveKeys<Optional, keyof Required>;
-  options?: EnvOptions;
+  options?: ConfigOptions;
 }
 
 export interface InternalOptions extends Omit<Required<Options>, 'optional'> {
