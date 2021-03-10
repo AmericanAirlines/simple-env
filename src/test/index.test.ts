@@ -1,9 +1,13 @@
 import 'jest';
+import fs from 'fs';
 import setEnvDefault from '..';
+import parseEnvFile from '../parser';
 
 describe('simple-env', () => {
   // Fresh setEnv for each test
   let setEnv: typeof setEnvDefault;
+  const readFileSpy = jest.spyOn(fs, 'readFileSync');
+  const existsSyncSpy = jest.spyOn(fs, 'existsSync');
 
   beforeEach(async () => {
     // Reset module cache and dynamically import it again
@@ -54,6 +58,7 @@ describe('simple-env', () => {
 
   describe('set', () => {
     afterEach(() => {
+      process.env = {};
       jest.resetModules();
     });
 
@@ -100,10 +105,97 @@ describe('simple-env', () => {
       expect(Object.getOwnPropertyDescriptors(env)).toHaveProperty('somethingElse');
     });
 
-    it('will read an env variable from a .env file into process.env', () => {
-      const env = setEnv({ required: { test: 'TEST' }, dotEnvOptions: { envFileName: '.env.unittest' } });
+    it('will invoke the parser is loadDotEnv is true', () => {
+      existsSyncSpy.mockReturnValue(true);
+      readFileSpy.mockImplementation(() => Buffer.from('TEST=test'));
 
-      expect(process.env.TEST).toEqual(env.test);
+      setEnv({ optional: { something: 'SOMETHING' }, options: { loadDotEnv: true } });
+
+      expect(process.env).toHaveProperty('TEST');
+    });
+
+    it('will not invoke the parser by default', () => {
+      existsSyncSpy.mockReturnValue(true);
+      readFileSpy.mockImplementation(() => Buffer.from('TEST=test'));
+
+      setEnv({ optional: { something: 'SOMETHING' } });
+
+      expect(process.env).not.toHaveProperty('TEST');
+    });
+  });
+
+  describe('parser', () => {
+    beforeEach(() => {
+      process.env = {};
+    });
+
+    afterEach(() => {
+      jest.resetModules();
+    });
+
+    it('will not overwrite vars that already exist', () => {
+      const originalValue = 'I already exist';
+      const newValue = 'I should not';
+      process.env = { TEST: originalValue };
+
+      readFileSpy.mockImplementation(() => Buffer.from(`TEST=${newValue}`));
+      existsSyncSpy.mockReturnValue(true);
+
+      parseEnvFile();
+
+      expect(process.env.TEST).toEqual(originalValue);
+    });
+
+    it('will reject malformed lines', () => {
+      const fakeFile =
+      `
+      bad
+      good=this
+      4=bad
+      good2='this'
+      good3="this"
+      `;
+      readFileSpy.mockImplementation(() => Buffer.from(fakeFile));
+      existsSyncSpy.mockReturnValue(true);
+
+      parseEnvFile();
+
+      expect(process.env.good).toEqual('this');
+      expect(process.env.good2).toEqual('this');
+      expect(process.env.good3).toEqual('this');
+    });
+
+    it('will ignore comments in the file', () => {
+      const fakeFile =
+      `
+      #comment\n
+      //comment\n
+      TEST=test
+      `;
+      readFileSpy.mockImplementation(() => Buffer.from(fakeFile));
+      existsSyncSpy.mockReturnValue(true);
+
+      parseEnvFile();
+
+      expect(process.env.TEST).toEqual('test');
+    });
+
+    it('will not do anything if the .env file does not exist', () => {
+      readFileSpy.mockImplementation(() => Buffer.from('TEST=test'));
+      existsSyncSpy.mockReturnValue(false);
+
+      parseEnvFile();
+
+      expect(process.env.TEST).toBeUndefined();
+    });
+
+    it('will read an env variable from a .env file into process.env', () => {
+      readFileSpy.mockImplementation(() => Buffer.from('TEST=test'));
+      existsSyncSpy.mockReturnValue(true);
+
+      parseEnvFile();
+
+      expect(process.env.TEST).toEqual('test');
     });
   });
 });

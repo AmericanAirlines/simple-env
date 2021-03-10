@@ -1,16 +1,14 @@
-import { readFileSync, existsSync } from 'fs';
-import { EOL } from 'os';
-import { join } from 'path';
+import parseEnvFile from './parser';
 import { EnvVarSymbols, UndefinedEnvVars } from './types/EnvVars';
 import { SymbolWithDescription } from './types/helpers';
-import { EnvOptions, InternalOptions, Options } from './types/Options';
+import { InternalOptions, Options } from './types/Options';
 
 let _requiredEnvVars: SymbolWithDescription[] = [];
 let _symbolizedEnvVars: Record<string, SymbolWithDescription>;
 let _options: InternalOptions = {
   required: {},
   optional: {},
-  dotEnvOptions: {},
+  options: {},
 };
 
 const createSymbol = (description: string): SymbolWithDescription => Symbol(description) as SymbolWithDescription;
@@ -37,52 +35,6 @@ function symbolizeVars<T>(input: Record<string, string>) {
   );
 }
 
-function parseLine(line: string): Record<string, string> {
-  const delimiter = '=';
-  const lineRegex = /^\s*[a-zA-Z_][a-zA-Z0-9_]*\s*="?'?.*'?"?$/g;
-  let [key, val] = line.split(delimiter);
-
-  // Ignore comments, or lines which don't conform to acceptable patterns
-  if (key.startsWith('#') || key.startsWith('//') || !lineRegex.test(line)) {
-    return {};
-  }
-
-  key = key.trim();
-  val = val.trim();
-  // Get rid of wrapping double or single quotes
-  if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
-    val = val.substr(1, val.length - 2);
-  }
-
-  return { [key]: val };
-}
-
-function parseEnvFile(dotEnvOptions: EnvOptions = {}): Record<string, string> {
-  const fullPath = dotEnvOptions.envFile || join(process.cwd(), '.env')
-
-  if (!existsSync(fullPath)) {
-    return {};
-  }
-
-  const envFileContents = readFileSync(fullPath).toString();
-  let envVarPairs: Record<string, string> = {};
-
-  const lines = envFileContents.split(EOL);
-  lines.forEach((line: string) => {
-    envVarPairs = { ...envVarPairs, ...parseLine(line) };
-  });
-
-  // Toss everything into the environment
-  Object.entries(envVarPairs).forEach(([key, val]) => {
-    // Prefer env vars that have been set by the OS
-    if (!process.env[key]) {
-      process.env[key] = val;
-    }
-  });
-
-  return envVarPairs;
-}
-
 export default function setEnv<T extends UndefinedEnvVars, V extends UndefinedEnvVars>(
   options: Options<T, V>,
 ): {
@@ -93,7 +45,9 @@ export default function setEnv<T extends UndefinedEnvVars, V extends UndefinedEn
     ...options,
   };
 
-  parseEnvFile(_options.dotEnvOptions);
+  if (_options.options.loadDotEnv) {
+    parseEnvFile(_options.options);
+  }
 
   const symbolizedRequiredEnvVars = symbolizeVars<EnvVarSymbols<T>>(_options.required);
   _requiredEnvVars = Object.values(symbolizedRequiredEnvVars);
