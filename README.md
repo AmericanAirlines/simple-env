@@ -161,7 +161,7 @@ export const env = setEnv({
 
 > **NOTE**: if you choose to assign `optional` and `required` env vars individually, `setEnv` should only be done _once_ for each or you will overwrite your previously defined values.
 
-### Loading DotEnv Files
+### Loading .env files
 
 You can give `simple-env` a path to a `.env` file, and it will parse the file and import the contents into the environment!
 
