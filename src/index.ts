@@ -1,3 +1,4 @@
+import parseEnvFile from './parser';
 import { EnvVarSymbols, UndefinedEnvVars } from './types/EnvVars';
 import { SymbolWithDescription } from './types/helpers';
 import { InternalOptions, Options } from './types/Options';
@@ -7,6 +8,7 @@ let _symbolizedEnvVars: Record<string, SymbolWithDescription>;
 let _options: InternalOptions = {
   required: {},
   optional: {},
+  options: {},
 };
 
 const createSymbol = (description: string): SymbolWithDescription => Symbol(description) as SymbolWithDescription;
@@ -42,6 +44,10 @@ export default function setEnv<T extends UndefinedEnvVars, V extends UndefinedEn
     ..._options,
     ...options,
   };
+
+  if (_options.options.envPath) {
+    parseEnvFile(_options.options);
+  }
 
   const symbolizedRequiredEnvVars = symbolizeVars<EnvVarSymbols<T>>(_options.required);
   _requiredEnvVars = Object.values(symbolizedRequiredEnvVars);

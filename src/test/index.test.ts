@@ -1,9 +1,12 @@
 import 'jest';
+import fs from 'fs';
 import setEnvDefault from '..';
 
 describe('simple-env', () => {
   // Fresh setEnv for each test
   let setEnv: typeof setEnvDefault;
+  const readFileSpy = jest.spyOn(fs, 'readFileSync');
+  const existsSyncSpy = jest.spyOn(fs, 'existsSync');
 
   beforeEach(async () => {
     // Reset module cache and dynamically import it again
@@ -54,6 +57,7 @@ describe('simple-env', () => {
 
   describe('set', () => {
     afterEach(() => {
+      process.env = {};
       jest.resetModules();
     });
 
@@ -98,6 +102,24 @@ describe('simple-env', () => {
 
       expect(Object.getOwnPropertyDescriptors(env)).not.toHaveProperty('something');
       expect(Object.getOwnPropertyDescriptors(env)).toHaveProperty('somethingElse');
+    });
+
+    it('will invoke the parser if envPath is set', () => {
+      existsSyncSpy.mockReturnValue(true);
+      readFileSpy.mockImplementation(() => Buffer.from('TEST=test'));
+
+      setEnv({ optional: { something: 'SOMETHING' }, options: { envPath: './a/.env' } });
+
+      expect(process.env).toHaveProperty('TEST');
+    });
+
+    it('will not invoke the parser by default', () => {
+      existsSyncSpy.mockReturnValue(true);
+      readFileSpy.mockImplementation(() => Buffer.from('TEST=test'));
+
+      setEnv({ optional: { something: 'SOMETHING' } });
+
+      expect(process.env).not.toHaveProperty('TEST');
     });
   });
 });

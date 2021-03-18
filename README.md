@@ -71,8 +71,8 @@ Autocomplete and Strongly Typed Keys are your new best friend! Using `simple-env
 | Autocomplete                       |      ✅      |    ❌    |    ❌     |
 | Strongly Typed Keys                |      ✅      |    ❌    |    ❌     |
 | Single Location Refactor           |      ✅      |    ❌    |    ❌     |
+| Loads .env                         |      ✅      |    ✅    |    ❌     |
 | Return Type Helpers                |      🔜      |    ❌    |    ✅     |
-| Loads .env                         |      🔜      |    ✅    |    ❌     |
 
 Let's see how some of the features above look in code:
 
@@ -160,6 +160,55 @@ export const env = setEnv({
 ```
 
 > **NOTE**: if you choose to assign `optional` and `required` env vars individually, `setEnv` should only be done _once_ for each or you will overwrite your previously defined values.
+
+### Loading .env files
+
+If you set a path to an `.env` file, `simple-env` will parse the file and import the contents into the environment automatically. These will be available in the `process.env` object.
+
+> If you don't specify a path, `simple-env` **will not** automatically load any `.env` files. This is to avoid a breaking change.
+
+```typescript
+// src/env.ts
+import setEnv from '@americanairlines/simple-env';
+
+export const env = setEnv({
+  required: {
+    nodeEnv: 'NODE_ENV',
+    someRequiredSecret: 'SOME_REQUIRED_SECRET',
+  },
+  options: {
+    envPath: "./.env"
+  }
+});
+```
+Each variable needs to be declared on a separate line.
+
+Comments must be on their own line, inline comments will be read in as part of the value to the variable!
+
+If `simple-env` finds something that it doesn't know how to parse, it just skips it and moves on to the next thing!
+
+Here's a sample `.env` file that will make us all happy :^)
+```
+# Comments like this will be ignored
+// These will be ignored too :^)
+
+# All of these vars are gonna work just fine!
+NODE_ENV=development
+SOME_REQUIRED_SECRET='Single quotes are fine!'
+ANOTHER_SECRET="Double quotes are fine too, we don't discriminate :^)"
+lowercase=no problem
+    SECRET_2_ELECTRIC_BOOGALOO   =   "We don't mind whitespace between the equal signs, or before the var definition"
+```
+
+Here's a sample `.env` file that will make us all sad :^(
+```
+# Uh-oh, these ones are invalid, so we'll have to skip them
+1BAD_VAR="Variables can't begin with numbers"
+ANOTHER BAD VAR="no whitespace allowed in var names"
+KEBAB-CASE="can't do it"
+VAR_WITHOUT_EQUAL_IS_SKIPPED
+loose text like this will also get skipped
+```
 
 # Contributing
 
