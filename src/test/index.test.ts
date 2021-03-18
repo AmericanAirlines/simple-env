@@ -104,7 +104,7 @@ describe('simple-env', () => {
       expect(Object.getOwnPropertyDescriptors(env)).toHaveProperty('somethingElse');
     });
 
-    it('will invoke the parser is envPath is set', () => {
+    it('will invoke the parser if envPath is set', () => {
       existsSyncSpy.mockReturnValue(true);
       readFileSpy.mockImplementation(() => Buffer.from('TEST=test'));
 
