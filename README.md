@@ -163,9 +163,9 @@ export const env = setEnv({
 
 ### Loading .env files
 
-You can give `simple-env` a path to a `.env` file, and it will parse the file and import the contents into the environment!
+If you set a path to an `.env` file, `simple-env` will parse the file and import the contents into the environment automatically. These will be available in the `process.env` object.
 
-If you don't specify a path, `simple-env` WILL NOT import anything!
+> If you don't specify a path, `simple-env` **will not** automatically load any `.env` files. This is to avoid a breaking change.
 
 ```typescript
 // src/env.ts
