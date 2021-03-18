@@ -23,7 +23,7 @@ function parseLine(line: string): Record<string, string> {
 }
 
 export function parseEnvFile(options: ConfigOptions = {}): void {
-  const fullPath = options.envFile || join(process.cwd(), '.env');
+  const fullPath = options.envPath || join(process.cwd(), '.env');
 
   if (!fs.existsSync(fullPath)) {
     return;

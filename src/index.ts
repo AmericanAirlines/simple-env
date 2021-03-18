@@ -45,7 +45,7 @@ export default function setEnv<T extends UndefinedEnvVars, V extends UndefinedEn
     ...options,
   };
 
-  if (_options.options.loadDotEnv) {
+  if (_options.options.envPath) {
     parseEnvFile(_options.options);
   }
 
