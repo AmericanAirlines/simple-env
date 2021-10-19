@@ -1,17 +1,8 @@
 module.exports = {
-  globals: {
-    'ts-jest': {
-      tsconfig: 'tsconfig.json',
-    },
-  },
-  moduleFileExtensions: ['js', 'json', 'ts'],
-  roots: ['src'],
-  transform: {
-    '^.+\\.(ts)$': 'ts-jest',
-  },
-  testMatch: ['**/*.test.(ts|js)'],
-  testEnvironment: 'node',
   preset: 'ts-jest',
+  moduleFileExtensions: ['js', 'ts'],
+  roots: ['src'],
+  testMatch: ['**/*.test.ts'],
   collectCoverageFrom: ['./src/**/*.ts', '!./src/test/fixtures/**/*'],
   coverageDirectory: './coverage',
   coverageThreshold: {

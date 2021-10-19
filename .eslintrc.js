@@ -1,6 +1,6 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
-  extends: ['airbnb-base', 'plugin:@typescript-eslint/recommended', 'plugin:react/recommended'],
+  extends: ['airbnb-base', 'plugin:@typescript-eslint/recommended'],
   plugins: ['@typescript-eslint', 'jest'],
   env: {
     commonjs: true,
