@@ -34,8 +34,8 @@
     "url": "https://github.com/AmericanAirlines/simple-env/issues"
   },
   "homepage": "https://github.com/AmericanAirlines/simple-env#readme",
-  "dependencies": {},
   "devDependencies": {
+    "@types/jest": "^27.0.2",
     "@typescript-eslint/eslint-plugin": "^5.1.0",
     "@typescript-eslint/parser": "^5.1.0",
     "chalk": "^4.1.0",
