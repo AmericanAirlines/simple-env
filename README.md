@@ -194,7 +194,7 @@ clearMocks: true,
 // ...
 ```
 
-Now you can write tests as normal using your new mocked environment!
+Now you can proceed with writing tests as normal using the new mocked environment.
 
 # Contributing
 
