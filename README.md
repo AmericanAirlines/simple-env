@@ -161,6 +161,41 @@ export const env = setEnv({
 
 > **NOTE**: if you choose to assign `optional` and `required` env vars individually, `setEnv` should only be done _once_ for each or you will overwrite your previously defined values.
 
+# Testing
+
+Providing mocked environment variables during testing is very straightforward. Perform the following steps to mock your environment in Jest:
+
+## Create Mock Environment
+1. Under your `src` folder, create a new folder called `__mocks__`. This is a special folder used by Jest to manually mock modules for testing. ([Documentation](https://jestjs.io/docs/manual-mocks))
+2. Create a file with an identical name and path to the real module. For example, if your module is at `src/env.ts`, your mocked module would live at `src/__mocks__/env.ts`.
+3. Define your mock environment in the file:
+
+```typescript
+export const env = {
+  nodeEnv: 'development',
+  requiredSecret: 'required123',
+  optionalSecret: 'optionalABC',
+};
+```
+
+## Register Mocks with Jest
+
+Now that we have a mock environment, all that's left is to instruct Jest to mock our env module:
+
+1. Create a file in your tests folder called `setupTests.ts` and add the following line:
+```typescript
+jest.mock('../src/env'); // Modify path to match your project structure
+```
+2. Add the following options to your Jest config (`jest.config.js`) file:
+```javascript
+// ...
+setupFilesAfterEnv: ['./tests/setupTests.ts'], // Modify path to match your project structure
+clearMocks: true,
+// ...
+```
+
+Now you can proceed with writing tests as normal using the new mocked environment.
+
 # Contributing
 
 Interested in contributing to the project? Check out our [Contributing Guidelines](./.github/CONTRIBUTING.md).

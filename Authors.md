@@ -5,3 +5,4 @@
 - Nick Kahlor (nicholas.kahlor@aa.com)
 - Jason Walker (jason.walker1@aa.com)
 - Austin Slobodnik (austin.slobodnik@aa.com)
+- Charlie Albright (charlie.albright@aa.com)
